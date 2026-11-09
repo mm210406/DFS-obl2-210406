@@ -1,0 +1,626 @@
+/* ============================================================
+   CineReview — estilos
+   Responsive: los tamaños se adaptan con clamp() y hay dos cortes
+   - hasta 56.25rem: tablet (menú de navegación desplegable)
+   - hasta 35rem: celular
+   ============================================================ */
+
+:root {
+  /* Fondos */
+  --bg: #05042A;
+  --bg-card: #10103A;
+  --bg-navbar: #0E0C3A;
+  /* Acentos */
+  --yellow: #F6C445;
+  --yellow-hover: #FFD86B;
+  --navy: #1B2A4A;
+  --lilac: #9C99E6;
+  --text-soft: #C9C7F2;
+  --text: #FFFFFF;
+  --border: #26265E;
+  /* Estados */
+  --error: #FF8A7A;
+  --error-bg: #2A0F1E;
+  --error-border: #7A2E3B;
+  --success: #4FB3A2;
+  --danger: #C42A1F;
+  --disabled-bg: #3A3A7A;
+  --disabled-text: #6E6BA8;
+  /* Tipografías */
+  --font-title: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-text: 'Nunito', system-ui, sans-serif;
+  /* Espaciado lateral de la página */
+  --gutter: clamp(1rem, 3.2vw, 2rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Tamaño base: 80% del que tenga configurado el navegador (12.8px por defecto) */
+html { font-size: 80%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+a { color: var(--yellow); }
+a:hover { color: var(--yellow-hover); }
+img { max-width: 100%; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.muted { color: var(--text-soft); }
+
+/* ---------- Layout ---------- */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+}
+
+.page__main { flex: 1; }
+
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section { padding-block: clamp(2rem, 4.8vw, 3.5rem); }
+
+.page-title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+
+.footer {
+  border-top: 1px solid var(--border);
+  color: var(--lilac);
+  text-align: center;
+  padding: 1.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+.footer a { color: var(--text-soft); }
+
+/* ---------- Botones ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0 1.75rem;
+  border: 0;
+  border-radius: 62.4375rem;
+  font-family: var(--font-text);
+  font-weight: 800;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn--primary { background: var(--yellow); color: var(--navy); }
+.btn--primary:hover { background: var(--yellow-hover); color: var(--navy); }
+
+.btn--block { width: 100%; height: 3.375rem; font-size: 1.0625rem; }
+
+.btn:disabled,
+.btn:disabled:hover {
+  background: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+/* ---------- Formularios ---------- */
+
+.field label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-weight: 800;
+  font-size: 0.9375rem;
+}
+
+.input {
+  width: 100%;
+  height: 3.25rem;
+  padding: 0 1rem;
+  border-radius: 0.75rem;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.input::placeholder { color: var(--lilac); opacity: 1; }
+.input:focus { outline: none; border-color: var(--yellow); box-shadow: 0 0 0 0.25rem rgba(246, 196, 69, 0.3); }
+.input--sm { height: 2.875rem; }
+.input--icon { padding-right: 3.25rem; }
+.input--prefixed { padding-left: 2.375rem; }
+.input--error, .input--error:focus { border-color: var(--error); }
+.input--valid { border-color: var(--success); }
+
+.input-wrap { position: relative; }
+
+.input-wrap__prefix {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--lilac);
+  font-weight: 800;
+}
+
+.input-wrap__toggle {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--lilac);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.input-wrap__toggle:hover { color: var(--text); }
+
+.error {
+  margin: 0.375rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--error);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.error svg { flex-shrink: 0; }
+
+.alert {
+  display: flex;
+  gap: 0.625rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: 0.75rem;
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+}
+
+.alert__icon { flex-shrink: 0; margin-top: 1px; color: var(--error); }
+.alert p { margin: 0; }
+.alert__title { font-weight: 800; font-size: 0.9375rem; }
+.alert__text { color: #F2C9C3; font-size: 0.875rem; }
+
+.requirements {
+  margin: -0.375rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.requirements li {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--lilac);
+}
+
+.requirements li svg { flex-shrink: 0; color: var(--disabled-text); }
+.requirements .requirements__item--done,
+.requirements .requirements__item--done svg { color: var(--success); }
+
+/* ---------- Logo (talón de entrada con agujeros recortados) ---------- */
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.625rem;
+  height: 3.25rem;
+  padding-left: 0.375rem;
+  background: var(--yellow);
+  border-radius: 3px;
+  transform: rotate(-4deg);
+  -webkit-mask-image:
+    radial-gradient(circle at 0 50%, #0000 0.25rem, #000 0.2812rem),
+    radial-gradient(circle at 100% 0, #0000 0.5rem, #000 0.5312rem),
+    radial-gradient(circle at 100% 100%, #0000 0.5rem, #000 0.5312rem);
+  -webkit-mask-size: 100% 0.65rem, auto, auto;
+  -webkit-mask-repeat: repeat-y, no-repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(circle at 0 50%, #0000 0.25rem, #000 0.2812rem),
+    radial-gradient(circle at 100% 0, #0000 0.5rem, #000 0.5312rem),
+    radial-gradient(circle at 100% 100%, #0000 0.5rem, #000 0.5312rem);
+  mask-size: 100% 0.65rem, auto, auto;
+  mask-repeat: repeat-y, no-repeat, no-repeat;
+  mask-composite: intersect;
+}
+
+.logo img { width: 1.875rem; height: auto; }
+
+/* ---------- Entrada grande con el nombre (login / registro) ----------
+   Todas las medidas internas están en em, así la entrada mantiene sus
+   proporciones y su tamaño depende solo del font-size.
+   El font-size se calcula sobre el ancho del contenedor (cqi) para que
+   en pantallas chicas la entrada ocupe todo el ancho disponible. */
+
+.brand-ticket-shadow {
+  display: flex;
+  /* Nunca más angosta que el formulario de abajo */
+  min-width: min(var(--auth-width), 100%);
+  filter: drop-shadow(0 1rem 1.125rem rgba(5, 4, 42, 0.55));
+}
+
+.brand-ticket {
+  --stub: 1.58em;
+  --corner: 0.177em;
+  --notch: 0.125em;
+  flex: 1;
+  display: flex;
+  font-size: clamp(2rem, 11.5cqi, 6rem);
+  background: var(--yellow);
+  border-radius: 0.042em;
+  transform: rotate(-2deg);
+  -webkit-mask-image:
+    radial-gradient(circle at 0 0, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 100% 0, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 0 100%, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 100% 100%, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at calc(100% - var(--stub) - 1px) 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)),
+    radial-gradient(circle at calc(100% - var(--stub) - 1px) 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)),
+    repeating-linear-gradient(to bottom, #000 0 0.104em, #0000 0.104em 0.177em);
+  -webkit-mask-size: auto, auto, auto, auto, auto, auto, max(2px, 0.042em) 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, calc(100% - var(--stub)) 0;
+  -webkit-mask-composite: source-in, source-in, source-in, source-in, source-in, source-out, source-over;
+  mask-image:
+    radial-gradient(circle at 0 0, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 100% 0, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 0 100%, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 100% 100%, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at calc(100% - var(--stub) - 1px) 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)),
+    radial-gradient(circle at calc(100% - var(--stub) - 1px) 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)),
+    repeating-linear-gradient(to bottom, #000 0 0.104em, #0000 0.104em 0.177em);
+  mask-size: auto, auto, auto, auto, auto, auto, max(2px, 0.042em) 100%;
+  mask-repeat: no-repeat;
+  mask-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, calc(100% - var(--stub)) 0;
+  mask-composite: intersect, intersect, intersect, intersect, intersect, subtract, add;
+}
+
+.brand-ticket__title {
+  flex: 1;
+  padding: 0.25em 0.54em;
+  text-align: center;
+  font-family: var(--font-title);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--navy);
+}
+
+.brand-ticket__stub {
+  width: var(--stub);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-ticket__stub img { width: 53%; height: auto; }
+
+/* ---------- Login / registro: telón cerrado ---------- */
+
+.auth {
+  --valance-height: clamp(10.625rem, 18.08vw, 20.375rem);
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--bg) url('./assets/curtain-closed.svg') center bottom / cover no-repeat;
+}
+
+.auth__valance {
+  position: absolute;
+  left: -2.5rem;
+  top: calc(var(--valance-height) * -0.48);
+  width: calc(100% + 5rem);
+  max-width: none;
+  height: var(--valance-height);
+  filter: drop-shadow(0 1rem 0.875rem rgba(5, 4, 42, 0.6));
+  pointer-events: none;
+}
+
+.auth__content {
+  --auth-width: 28.75rem;
+  position: relative;
+  /* Contenedor de referencia para las medidas cqi de la entrada */
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 2vw, 2.25rem);
+  padding: calc(var(--valance-height) * 0.45) 1rem 4rem;
+}
+
+/* Alto del registro con errores en todos los campos (el estado más largo).
+   Login y registro reservan este alto, así el fondo queda igual en las dos.
+   Si se agregan campos al registro, hay que actualizar estos valores. */
+.auth__form-slot {
+  --auth-form-height: 52rem;
+  width: 100%;
+  max-width: var(--auth-width);
+  min-height: var(--auth-form-height);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: var(--auth-width);
+  padding: clamp(1.25rem, 2.4vw, 1.75rem) clamp(1.125rem, 2.4vw, 2rem) clamp(1.25rem, 2.4vw, 1.625rem);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 1.5rem 3.75rem rgba(0, 0, 0, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+}
+
+.auth-card__title {
+  margin: 0.25rem 0;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 1.875rem;
+  line-height: 1.15;
+}
+
+.auth-card__subtitle { margin: 0; color: var(--text-soft); font-size: 0.9375rem; }
+
+.auth-card__footer {
+  margin: 0;
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 0.9375rem;
+}
+
+.auth-card__footer a { font-weight: 800; }
+
+.auth-tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 62.4375rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.auth-tabs a {
+  flex: 1;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 62.4375rem;
+  color: var(--text-soft);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.auth-tabs a.active { background: var(--yellow); color: var(--navy); }
+
+/* ---------- Navbar ---------- */
+
+.navbar {
+  position: relative;
+  z-index: 5;
+  background: var(--bg-navbar);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar__inner {
+  max-width: 85rem;
+  margin: 0 auto;
+  padding: 0.875rem var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 1rem 1.75rem;
+}
+
+.navbar__brand { display: flex; align-items: center; gap: 0.875rem; margin-right: auto; }
+
+.admin-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 62.4375rem;
+  border: 2px solid var(--yellow);
+  color: var(--yellow);
+  font-weight: 800;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+}
+
+.navbar__links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.navbar__links a {
+  display: block;
+  padding: 0.625rem 1rem;
+  border-radius: 62.4375rem;
+  color: var(--text-soft);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.navbar__links a:hover { color: var(--text); }
+.navbar__links a.active { background: var(--navy); color: var(--text); font-weight: 800; }
+
+.navbar__actions { display: flex; align-items: center; gap: 0.5rem; }
+
+.navbar__toggle {
+  display: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.navbar__toggle:hover { background: var(--navy); }
+
+/* ---------- Avatar y menú de usuario ---------- */
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--yellow);
+  background: var(--navy);
+  color: var(--yellow);
+  font-family: var(--font-title);
+  font-weight: 800;
+  object-fit: cover;
+}
+
+.avatar--md { width: 2.75rem; height: 2.75rem; font-size: 0.9375rem; }
+.avatar--lg { width: 7.5rem; height: 7.5rem; font-size: 2.5rem; border-width: 3px; }
+
+.user-menu { position: relative; }
+
+.user-menu__button {
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user-menu__list {
+  position: absolute;
+  right: 0;
+  top: 3.375rem;
+  width: 12.5rem;
+  background: #FFFFFF;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.875rem 1.875rem rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.user-menu__list a,
+.user-menu__list button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 0;
+  background: none;
+  text-align: left;
+  font-family: var(--font-text);
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.user-menu__name {
+  margin: 0;
+  padding: 0.75rem 1rem 0.25rem;
+  color: #5B5F7A;
+  font-weight: 800;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.user-menu__list a { color: var(--navy); font-weight: 700; border-bottom: 1px solid #E8EAF4; }
+.user-menu__list a:hover, .user-menu__list button:hover { background: #F2F3FA; color: var(--navy); }
+.user-menu__list .user-menu__logout { color: var(--danger); font-weight: 800; }
+
+/* ---------- 404 ---------- */
+
+.not-found { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+
+.not-found__code {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 7.5rem;
+  line-height: 1;
+  color: var(--yellow);
+}
+
+/* ---------- Toasts (react-toastify) ---------- */
+
+.Toastify__toast {
+  font-family: var(--font-text);
+  font-weight: 700;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+}
+
+/* ---------- Responsive ---------- */
+
+/* Tablet: los links pasan a un menú desplegable debajo de la barra */
+@media (max-width: 720px) {
+  .navbar__inner { flex-wrap: wrap; }
+
+  .navbar__toggle { display: flex; }
+
+  .navbar__links {
+    order: 3;
+    flex-basis: 100%;
+    flex-direction: column;
+    display: none;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .navbar__links.is-open { display: flex; }
+
+  .navbar__links a { padding: 0.75rem 1rem; border-radius: 0.75rem; }
+}
+
+/* Celular */
+@media (max-width: 448px) {
+  /* Los mensajes de error ocupan dos líneas y el registro queda más alto */
+  .auth__form-slot { --auth-form-height: 55rem; }
+  .not-found__code { font-size: 5.5rem; }
+  .requirements { flex-direction: column; }
+}
+
+/* Respeta a quien prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
