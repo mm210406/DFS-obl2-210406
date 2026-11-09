@@ -1,4 +1,3 @@
-// Íconos SVG usados en la app. Toman el color del texto (currentColor).
 const paths = {
   alert: (
     <>
@@ -21,7 +20,6 @@ const paths = {
   close: <path d="M6 6l12 12M18 6L6 18" />,
 }
 
-// size se indica en px de diseño y se pasa a rem para que escale con el tamaño base
 const toRem = (px) => `${px / 16}rem`
 
 const Icon = ({ name, size = 20, strokeWidth = 2.4, className }) => {

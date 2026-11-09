@@ -1,4 +1,3 @@
-// Foto de perfil o, si no tiene, las iniciales del nombre de usuario
 const Avatar = ({ user, size = 'md' }) => {
   const initials = (user?.name || '?').slice(0, 2).toUpperCase()
 

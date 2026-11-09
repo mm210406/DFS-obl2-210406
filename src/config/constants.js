@@ -1,4 +1,3 @@
-// Valores compartidos por toda la app (deben coincidir con el backend)
 
 export const ROLES = {
   ADMIN: 'ADMIN',

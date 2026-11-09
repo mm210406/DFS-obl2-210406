@@ -11,8 +11,6 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-// Si el token venció (401 en un pedido autenticado) se avisa para cerrar la sesión.
-// El store se registra desde afuera para no crear una dependencia circular.
 let onUnauthorized = () => {}
 export const setUnauthorizedHandler = (handler) => {
   onUnauthorized = handler
@@ -27,6 +25,5 @@ api.interceptors.response.use(
   },
 )
 
-// Mensaje de error que devuelve el backend ({ mensaje }) o uno genérico
 export const getErrorMessage = (error, fallback = 'Ocurrió un error, intentá de nuevo') =>
   error.response?.data?.mensaje || fallback

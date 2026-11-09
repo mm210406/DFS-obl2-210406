@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 
-// Ejecuta onClose al hacer click fuera de ref o al apretar Escape (solo mientras active sea true)
 const useClickOutside = (ref, onClose, active) => {
   useEffect(() => {
     if (!active) return

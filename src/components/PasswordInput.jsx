@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import Icon from './Icon'
 
-// Input de contraseña con botón para mostrarla u ocultarla.
-// Recibe las props de register() de react-hook-form (incluida la ref).
 const PasswordInput = ({ className = '', ...props }) => {
   const [visible, setVisible] = useState(false)
 

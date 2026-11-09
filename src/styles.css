@@ -1,5 +1,4 @@
 /* ============================================================
-   CineReview — estilos
    Responsive: los tamaños se adaptan con clamp() y hay dos cortes
    - hasta 56.25rem: tablet (menú de navegación desplegable)
    - hasta 35rem: celular
@@ -268,9 +267,6 @@ img { max-width: 100%; }
 .logo img { width: 1.875rem; height: auto; }
 
 /* ---------- Entrada grande con el nombre (login / registro) ----------
-   Todas las medidas internas están en em, así la entrada mantiene sus
-   proporciones y su tamaño depende solo del font-size.
-   El font-size se calcula sobre el ancho del contenedor (cqi) para que
    en pantallas chicas la entrada ocupe todo el ancho disponible. */
 
 .brand-ticket-shadow {

@@ -29,7 +29,6 @@ const Register = () => {
     formState: { errors, touchedFields },
   } = useForm({ resolver: joiResolver(registerSchema), mode: 'onTouched' })
 
-  // Requisitos de la contraseña que se van marcando mientras se escribe
   const password = watch('password') || ''
   const requirements = [
     { text: `Al menos ${PASSWORD_MIN} caracteres`, done: password.length >= PASSWORD_MIN },
@@ -57,7 +56,6 @@ const Register = () => {
       .catch((error) => {
         const status = error.response?.status
         if (status === 409) {
-          // El campo ya muestra el mensaje, no hace falta otra alerta
           setError('email', { message: getErrorMessage(error) })
         } else if (status === 429) {
           setFormAlert({ title: 'Demasiados intentos', text: getErrorMessage(error), blocked: true })

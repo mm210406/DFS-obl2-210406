@@ -9,7 +9,6 @@ export const store = configureStore({
   },
 })
 
-// Token vencido o inválido: se borra la sesión y ProtectedRoute manda al login
 setUnauthorizedHandler(() => {
   clearSession()
   store.dispatch(logout())

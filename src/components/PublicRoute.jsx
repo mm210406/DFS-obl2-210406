@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router'
 import { homePath } from '../utils/session'
 
-// Login y registro: si ya hay sesión, va directo a su pantalla inicial
 const PublicRoute = () => {
   const { token, user } = useSelector((state) => state.user)
 
