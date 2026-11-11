@@ -18,11 +18,28 @@ const paths = {
   circle: <circle cx="12" cy="12" r="7" />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   close: <path d="M6 6l12 12M18 6L6 18" />,
+  star: <path d="M12 2l2.9 6.3 6.9.7-5.2 4.7 1.5 6.8L12 17l-6.1 3.5 1.5-6.8L2.2 9l6.9-.7z" />,
+  plus: <path d="M12 5v14M5 12h14" />,
+  chevronDown: <path d="M6 9l6 6 6-6" />,
+  chevronUp: <path d="M6 15l6-6 6 6" />,
+  search: (
+    <>
+      <circle cx="10" cy="10" r="6.5" />
+      <path d="M15 15l6 6" />
+    </>
+  ),
+  upload: <path d="M12 16V6M7 11l5-5 5 5M5 19h14" />,
+  film: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="M3 9h18M8 4v5M16 4v5" />
+    </>
+  ),
 }
 
 const toRem = (px) => `${px / 16}rem`
 
-const Icon = ({ name, size = 20, strokeWidth = 2.4, className }) => {
+const Icon = ({ name, size = 20, strokeWidth = 2.4, filled = false, className }) => {
   return (
     <svg
       aria-hidden="true"
@@ -30,8 +47,8 @@ const Icon = ({ name, size = 20, strokeWidth = 2.4, className }) => {
       width={toRem(size)}
       height={toRem(size)}
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
+      fill={filled ? 'currentColor' : 'none'}
+      stroke={filled ? 'none' : 'currentColor'}
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"

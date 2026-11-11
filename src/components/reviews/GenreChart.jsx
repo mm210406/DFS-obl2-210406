@@ -41,6 +41,8 @@ const GenreChart = () => {
   const [error, setError] = useState(false)
 
   useEffect(() => {
+    if (total === 0) return
+
     api
       .get('/users/me/stats')
       .then((res) => {
@@ -50,21 +52,34 @@ const GenreChart = () => {
       .catch(() => setError(true))
   }, [total])
 
-  if (error) return <p className="muted">No pudimos cargar tus estadísticas.</p>
-  if (stats?.reviews === 0) return null
-
   const header = (
     <div>
-      <h2 id="genre-chart-title">Tus reseñas por género</h2>
-      <p className="muted">
+      <h2 id="genre-chart-title" className="panel__title">
+        Tus reseñas por género
+      </h2>
+      <p className="panel__note">
         Una película puede contar en varios géneros, por eso suman más que tus reseñas.
       </p>
     </div>
   )
 
+  if (total === 0) {
+    return (
+      <section className="panel genre-chart" aria-labelledby="genre-chart-title">
+        {header}
+        <div className="genre-chart__empty">
+          <span className="genre-chart__empty-ring" aria-hidden="true" />
+          <p>Cuando escribas tu primera reseña, acá vas a ver qué géneros mira más tu familia.</p>
+        </div>
+      </section>
+    )
+  }
+
+  if (error) return <p className="muted">No pudimos cargar tus estadísticas.</p>
+
   if (!stats) {
     return (
-      <section className="genre-chart" aria-labelledby="genre-chart-title" aria-busy="true">
+      <section className="panel genre-chart" aria-labelledby="genre-chart-title" aria-busy="true">
         {header}
         <div className="genre-chart__content" aria-hidden="true">
           <div className="genre-chart__doughnut">
@@ -78,7 +93,7 @@ const GenreChart = () => {
             ))}
           </ul>
         </div>
-        <p aria-hidden="true">
+        <p className="genre-chart__footer" aria-hidden="true">
           <span className="skeleton skeleton--line" />
         </p>
       </section>
@@ -106,7 +121,7 @@ const GenreChart = () => {
     .join('; ')}.`
 
   return (
-    <section className="genre-chart" aria-labelledby="genre-chart-title">
+    <section className="panel genre-chart" aria-labelledby="genre-chart-title">
       {header}
 
       <div className="genre-chart__content">
@@ -121,16 +136,16 @@ const GenreChart = () => {
           {genres.map((genre, index) => (
             <li key={genre.genreId}>
               <span className="genre-chart__color" style={{ background: COLORS[index] }} />
-              <span>{genre.name}</span>
-              <span>{genre.count}</span>
-              <span>{percentage(genre.count)}%</span>
+              <span className="genre-chart__name">{genre.name}</span>
+              <span className="genre-chart__count">{genre.count}</span>
+              <span className="genre-chart__percentage">{percentage(genre.count)}%</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <p>
-        Tu promedio: <strong>{stats.average.toLocaleString('es-UY')}</strong> · Tu favorito:{' '}
+      <p className="genre-chart__footer">
+        Tu promedio: <strong className="genre-chart__average">{stats.average.toLocaleString('es-UY')}</strong> · Tu favorito:{' '}
         <strong>{stats.favoriteGenre}</strong>
       </p>
     </section>

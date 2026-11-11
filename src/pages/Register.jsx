@@ -26,7 +26,7 @@ const Register = () => {
     handleSubmit,
     watch,
     setError,
-    formState: { errors, touchedFields },
+    formState: { errors, touchedFields, isValid },
   } = useForm({ resolver: joiResolver(registerSchema), mode: 'onTouched' })
 
   const password = watch('password') || ''
@@ -145,7 +145,11 @@ const Register = () => {
 
       {formAlert && <FormAlert title={formAlert.title} text={formAlert.text} />}
 
-      <button type="submit" className="btn btn--primary btn--block" disabled={loading || formAlert?.blocked}>
+      <button
+        type="submit"
+        className="btn btn--primary btn--block"
+        disabled={!isValid || loading || formAlert?.blocked}
+      >
         {loading ? 'Creando cuenta...' : 'Crear cuenta'}
       </button>
       <p className="auth-card__footer">
