@@ -19,8 +19,8 @@ export const setUnauthorizedHandler = (handler) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const sentToken = Boolean(error.config?.headers?.Authorization)
-    if (error.response?.status === 401 && sentToken) onUnauthorized()
+    const isAuthRequest = error.config?.url?.startsWith('/auth')
+    if (error.response?.status === 401 && !isAuthRequest) onUnauthorized()
     return Promise.reject(error)
   },
 )

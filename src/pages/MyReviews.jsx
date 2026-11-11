@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { api, getErrorMessage } from '../config/api.config'
 import { PLANS, PLUS_REVIEW_LIMIT, REVIEWS_PER_PAGE } from '../config/constants'
-import { setReviews } from '../features/reviews.slice'
+import { setReviews, removeReview } from '../features/reviews.slice'
 import FormAlert from '../components/FormAlert'
 import Icon from '../components/Icon'
 import ReviewCard from '../components/reviews/ReviewCard'
@@ -52,12 +52,33 @@ const MyReviews = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const refreshReviews = () => {
+    loadReviews(currentPage).catch(() => toast.error('No pudimos actualizar la lista de reseñas'))
+  }
+
   const handleCreated = () => {
     setFormOpen(false)
     if (currentPage === 1) {
-      loadReviews(1).catch(() => toast.error('No pudimos actualizar la lista de reseñas'))
+      refreshReviews()
     } else {
       changePage(1)
+    }
+  }
+
+  const handleDeleted = (review) => {
+    dispatch(removeReview(review._id))
+
+    let message = `Eliminaste tu reseña de ${review.movieTitle}.`
+    if (plan === PLANS.PLUS) {
+      const remaining = PLUS_REVIEW_LIMIT - (total - 1)
+      message += ` Ahora te ${remaining === 1 ? 'queda' : 'quedan'} ${remaining} ${remaining === 1 ? 'reseña' : 'reseñas'} de las ${PLUS_REVIEW_LIMIT} del plan Plus.`
+    }
+    toast.success(message)
+
+    if (reviews.length === 1 && currentPage > 1) {
+      changePage(currentPage - 1)
+    } else {
+      refreshReviews()
     }
   }
 
@@ -123,7 +144,12 @@ const MyReviews = () => {
               <>
                 <div className="review-list">
                   {reviews.map((review) => (
-                    <ReviewCard key={review._id} review={review} />
+                    <ReviewCard
+                      key={review._id}
+                      review={review}
+                      onDeleted={handleDeleted}
+                      onRefresh={refreshReviews}
+                    />
                   ))}
                 </div>
                 <Pagination

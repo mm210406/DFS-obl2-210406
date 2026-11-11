@@ -23,10 +23,16 @@ export const reviewsSlice = createSlice({
       state.total -= 1
     },
 
+    replaceReview: (state, action) => {
+      state.reviews = state.reviews.map((review) =>
+        review._id === action.payload._id ? action.payload : review,
+      )
+    },
+
     clearReviews: () => initialState,
   },
 })
 
-export const { setReviews, removeReview, clearReviews } = reviewsSlice.actions
+export const { setReviews, removeReview, replaceReview, clearReviews } = reviewsSlice.actions
 
 export default reviewsSlice.reducer

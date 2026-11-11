@@ -7,11 +7,7 @@ export const MAX_IMAGE_SIZE_MB = 4
 
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024
 
-export const newReviewSchema = Joi.object({
-  tmdbId: Joi.number().integer().required().messages({
-    'number.base': 'Elegí una película',
-    'any.required': 'Elegí una película',
-  }),
+const reviewFields = {
   points: Joi.number().integer().min(1).max(10).required().messages({
     'number.base': 'Elegí un puntaje',
     'any.required': 'Elegí un puntaje',
@@ -44,4 +40,14 @@ export const newReviewSchema = Joi.object({
       'file.type': 'El archivo tiene que ser una imagen (JPG, PNG, WebP…).',
       'file.size': `La imagen pesa {#size}. El máximo es ${MAX_IMAGE_SIZE_MB} MB.`,
     }),
+}
+
+export const newReviewSchema = Joi.object({
+  tmdbId: Joi.number().integer().required().messages({
+    'number.base': 'Elegí una película',
+    'any.required': 'Elegí una película',
+  }),
+  ...reviewFields,
 })
+
+export const editReviewSchema = Joi.object(reviewFields)
