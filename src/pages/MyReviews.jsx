@@ -14,6 +14,7 @@ import PlanCard from '../components/reviews/PlanCard'
 import EmptyReviews from '../components/reviews/EmptyReviews'
 import NewReviewForm from '../components/reviews/NewReviewForm'
 import NoQuotaNotice from '../components/reviews/NoQuotaNotice'
+import PremiumDialog from '../components/reviews/PremiumDialog'
 
 const MyReviews = () => {
   const dispatch = useDispatch()
@@ -23,6 +24,7 @@ const MyReviews = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [formOpen, setFormOpen] = useState(false)
+  const [premiumOpen, setPremiumOpen] = useState(false)
 
   const loadReviews = useCallback(
     (page) =>
@@ -93,7 +95,7 @@ const MyReviews = () => {
 
       {ready && (
         <>
-          {noQuota && <NoQuotaNotice />}
+          {noQuota && <NoQuotaNotice onUpgrade={() => setPremiumOpen(true)} />}
 
           {formOpen && !noQuota && (
             <NewReviewForm onCancel={() => setFormOpen(false)} onCreated={handleCreated} />
@@ -103,7 +105,7 @@ const MyReviews = () => {
             <GenreChart />
             <div className="my-reviews__aside">
               <PlanUsage />
-              <PlanCard />
+              <PlanCard onUpgrade={() => setPremiumOpen(true)} />
             </div>
           </div>
 
@@ -135,6 +137,12 @@ const MyReviews = () => {
           </section>
         </>
       )}
+
+      <PremiumDialog
+        open={premiumOpen}
+        onClose={() => setPremiumOpen(false)}
+        onWriteReview={openForm}
+      />
     </section>
   )
 }

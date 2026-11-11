@@ -1,6 +1,9 @@
 import { Link } from 'react-router'
 import { ROUTES } from '../../config/constants'
 import { formatDate, getYear } from '../../utils/format'
+import ScoreTicket from '../ScoreTicket'
+import FilmStripPhoto from '../FilmStripPhoto'
+import Icon from '../Icon'
 
 const ReviewCard = ({ review }) => {
   const movieUrl = `${ROUTES.MOVIES}/${review.tmdbId}`
@@ -11,37 +14,33 @@ const ReviewCard = ({ review }) => {
   return (
     <article className="review-card" aria-label={`Tu reseña de ${review.movieTitle}`}>
       <Link to={movieUrl} className="review-card__poster" aria-hidden="true" tabIndex={-1}>
-        <img src={review.posterUrl} alt="" />
+        {review.posterUrl ? <img src={review.posterUrl} alt="" /> : <Icon name="film" size={28} />}
       </Link>
 
       <div className="review-card__header">
-        <div>
+        <div className="review-card__heading">
           <h3 className="review-card__title">
             <Link to={movieUrl}>{review.movieTitle}</Link>{' '}
             <span className="review-card__year">{getYear(review.releaseDate)}</span>
           </h3>
           <p className="review-card__genres">{genres}</p>
         </div>
-        <p className="review-card__points" aria-label={`Puntaje: ${review.points} de 10`}>
-          {review.points}
-        </p>
+        <ScoreTicket points={review.points} />
       </div>
 
       <div className="review-card__body">
-        <p>{review.description}</p>
+        <p className="review-card__description">{review.description}</p>
         {hasOwnPhoto && (
-          <img
-            className="review-card__photo"
-            src={review.imageUrl}
-            alt={`Tu foto de ${review.movieTitle}`}
-          />
+          <FilmStripPhoto src={review.imageUrl} alt={`tu foto de ${review.movieTitle}`} />
         )}
       </div>
 
-      <p className="review-card__date">
-        Publicada el {formatDate(review.createdAt)}
-        {wasEdited && ` · Editada el ${formatDate(review.updatedAt)}`}
-      </p>
+      <div className="review-card__footer">
+        <p className="review-card__date">
+          Publicada el {formatDate(review.createdAt)}
+          {wasEdited && ` · Editada el ${formatDate(review.updatedAt)}`}
+        </p>
+      </div>
     </article>
   )
 }
