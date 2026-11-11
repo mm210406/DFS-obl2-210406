@@ -1,6 +1,7 @@
+import { MAX_POINTS, MIN_POINTS } from '../../config/constants'
 import FieldError from '../FieldError'
 
-const POINTS = Array.from({ length: 10 }, (_, index) => index + 1)
+const POINTS = Array.from({ length: MAX_POINTS - MIN_POINTS + 1 }, (_, index) => MIN_POINTS + index)
 
 const PointsPicker = ({ id, register, value, error }) => {
   return (

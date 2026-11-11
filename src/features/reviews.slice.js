@@ -5,6 +5,7 @@ const initialState = {
   page: 1,
   pages: 0,
   total: 0,
+  resultsTotal: 0,
 }
 
 export const reviewsSlice = createSlice({
@@ -12,15 +13,18 @@ export const reviewsSlice = createSlice({
   initialState,
   reducers: {
     setReviews: (state, action) => {
-      state.reviews = action.payload.reviews
-      state.page = action.payload.page
-      state.pages = action.payload.pages
-      state.total = action.payload.total
+      const { reviews, page, pages, total, filtered } = action.payload
+      state.reviews = reviews
+      state.page = page
+      state.pages = pages
+      state.resultsTotal = total
+      if (!filtered) state.total = total
     },
 
     removeReview: (state, action) => {
       state.reviews = state.reviews.filter((review) => review._id !== action.payload)
       state.total -= 1
+      state.resultsTotal -= 1
     },
 
     replaceReview: (state, action) => {

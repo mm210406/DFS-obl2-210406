@@ -1,4 +1,5 @@
 import Joi from 'joi'
+import { MAX_POINTS, MIN_POINTS } from '../config/constants'
 import { formatFileSize } from '../utils/format'
 
 export const DESCRIPTION_MIN = 3
@@ -8,7 +9,7 @@ export const MAX_IMAGE_SIZE_MB = 4
 const MAX_IMAGE_SIZE_BYTES = MAX_IMAGE_SIZE_MB * 1024 * 1024
 
 const reviewFields = {
-  points: Joi.number().integer().min(1).max(10).required().messages({
+  points: Joi.number().integer().min(MIN_POINTS).max(MAX_POINTS).required().messages({
     'number.base': 'Elegí un puntaje',
     'any.required': 'Elegí un puntaje',
   }),

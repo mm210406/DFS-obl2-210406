@@ -10,6 +10,9 @@ export const PLANS = {
 
 export const PLUS_REVIEW_LIMIT = 4
 
+export const MIN_POINTS = 1
+export const MAX_POINTS = 10
+
 export const ROUTES = {
   LOGIN: '/login',
   REGISTER: '/register',
