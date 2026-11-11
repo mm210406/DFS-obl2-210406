@@ -1,0 +1,32 @@
+import { createSlice } from '@reduxjs/toolkit'
+
+const initialState = {
+  reviews: [],
+  page: 1,
+  pages: 0,
+  total: 0,
+}
+
+export const reviewsSlice = createSlice({
+  name: 'reviews',
+  initialState,
+  reducers: {
+    setReviews: (state, action) => {
+      state.reviews = action.payload.reviews
+      state.page = action.payload.page
+      state.pages = action.payload.pages
+      state.total = action.payload.total
+    },
+
+    removeReview: (state, action) => {
+      state.reviews = state.reviews.filter((review) => review._id !== action.payload)
+      state.total -= 1
+    },
+
+    clearReviews: () => initialState,
+  },
+})
+
+export const { setReviews, removeReview, clearReviews } = reviewsSlice.actions
+
+export default reviewsSlice.reducer
