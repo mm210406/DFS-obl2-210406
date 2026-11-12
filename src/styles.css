@@ -628,6 +628,7 @@ img { max-width: 100%; }
 
 .avatar--md { width: 2.75rem; height: 2.75rem; font-size: 0.9375rem; }
 .avatar--lg { width: 7.5rem; height: 7.5rem; font-size: 2.5rem; border-width: 3px; }
+.avatar--xl { width: 10rem; height: 10rem; font-size: 3.25rem; border-width: 4px; }
 
 .user-menu { position: relative; }
 
@@ -779,7 +780,8 @@ img { max-width: 100%; }
   font-weight: 700;
 }
 
-.review-card__body {
+.review-card__body,
+.movie-review__body {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -787,7 +789,8 @@ img { max-width: 100%; }
   margin-top: 0.875rem;
 }
 
-.review-card__description {
+.review-card__description,
+.movie-review__description {
   flex: 1 1 18rem;
   min-width: 0;
   max-width: 70ch;
@@ -797,7 +800,8 @@ img { max-width: 100%; }
   overflow-wrap: anywhere;
 }
 
-.review-card__body .film-strip {
+.review-card__body .film-strip,
+.movie-review__body .film-strip {
   margin-left: auto;
   margin-right: 0.375rem;
 }
@@ -820,6 +824,11 @@ img { max-width: 100%; }
 }
 
 .score-ticket {
+  --corner: 0.375rem;
+  --notch: 0.3125rem;
+  --dash: 0.25rem;
+  --dash-gap: 0.1875rem;
+  --perforation: 2px;
   flex-shrink: 0;
   display: inline-grid;
   grid-template-columns: 2fr 1fr;
@@ -828,26 +837,34 @@ img { max-width: 100%; }
   color: var(--navy);
   border-radius: 4px;
   -webkit-mask-image:
-    radial-gradient(circle at 0 0, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
-    radial-gradient(circle at 100% 0, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
-    radial-gradient(circle at 0 100%, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
-    radial-gradient(circle at 100% 100%, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
-    radial-gradient(circle at 66.6667% 0, #0000 0.3125rem, #000 calc(0.3125rem + 0.5px)),
-    radial-gradient(circle at 66.6667% 100%, #0000 0.3125rem, #000 calc(0.3125rem + 0.5px)),
-    repeating-linear-gradient(to bottom, #000 0 0.25rem, #0000 0.25rem 0.4375rem);
-  -webkit-mask-size: auto, auto, auto, auto, auto, auto, 2px 100%;
+    radial-gradient(circle at 0 0, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 100% 0, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 0 100%, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 100% 100%, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 66.6667% 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)),
+    radial-gradient(circle at 66.6667% 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)),
+    repeating-linear-gradient(
+      to bottom,
+      #000 0 var(--dash),
+      #0000 var(--dash) calc(var(--dash) + var(--dash-gap))
+    );
+  -webkit-mask-size: auto, auto, auto, auto, auto, auto, var(--perforation) 100%;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 66.6667% 0;
   -webkit-mask-composite: source-in, source-in, source-in, source-in, source-in, source-out, source-over;
   mask-image:
-    radial-gradient(circle at 0 0, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
-    radial-gradient(circle at 100% 0, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
-    radial-gradient(circle at 0 100%, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
-    radial-gradient(circle at 100% 100%, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
-    radial-gradient(circle at 66.6667% 0, #0000 0.3125rem, #000 calc(0.3125rem + 0.5px)),
-    radial-gradient(circle at 66.6667% 100%, #0000 0.3125rem, #000 calc(0.3125rem + 0.5px)),
-    repeating-linear-gradient(to bottom, #000 0 0.25rem, #0000 0.25rem 0.4375rem);
-  mask-size: auto, auto, auto, auto, auto, auto, 2px 100%;
+    radial-gradient(circle at 0 0, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 100% 0, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 0 100%, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 100% 100%, #0000 var(--corner), #000 calc(var(--corner) + 0.5px)),
+    radial-gradient(circle at 66.6667% 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)),
+    radial-gradient(circle at 66.6667% 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)),
+    repeating-linear-gradient(
+      to bottom,
+      #000 0 var(--dash),
+      #0000 var(--dash) calc(var(--dash) + var(--dash-gap))
+    );
+  mask-size: auto, auto, auto, auto, auto, auto, var(--perforation) 100%;
   mask-repeat: no-repeat;
   mask-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 66.6667% 0;
   mask-composite: intersect, intersect, intersect, intersect, intersect, subtract, add;
@@ -867,6 +884,46 @@ img { max-width: 100%; }
   font-weight: 800;
   font-size: 1rem;
   line-height: 1;
+}
+
+.score-ticket--lg {
+  --corner: 0.75rem;
+  --notch: 0.625rem;
+  --dash: 0.5rem;
+  --dash-gap: 0.375rem;
+  --perforation: 3px;
+  rotate: -2deg;
+}
+
+.score-ticket--lg .score-ticket__label {
+  display: flex;
+  flex-direction: column;
+  padding: 0.875rem 1.375rem;
+}
+
+.score-ticket__title {
+  font-weight: 800;
+}
+
+.score-ticket__count {
+  font-weight: 700;
+}
+
+.score-ticket--lg .score-ticket__value {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.125rem;
+  padding: 0.625rem 0.875rem;
+}
+
+.score-ticket__number {
+  font-size: 3rem;
+}
+
+.score-ticket__max {
+  font-family: var(--font-text);
+  font-size: 0.9375rem;
 }
 
 .film-strip {
@@ -3003,10 +3060,389 @@ img { max-width: 100%; }
   outline-offset: 2px;
 }
 
+/* ---------- Detalle de película ---------- */
+
+.movie-hero__backdrop {
+  position: relative;
+  height: clamp(14rem, 36vw, 32.5rem);
+  overflow: hidden;
+  background: var(--navy);
+}
+
+.movie-hero__backdrop img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-hero__backdrop::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 70%;
+  background: linear-gradient(to bottom, rgba(5, 4, 42, 0), var(--bg));
+}
+
+.movie-hero__content {
+  position: relative;
+  display: grid;
+  grid-template-columns: 17.5rem minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 2.5rem;
+  margin-top: calc(clamp(14rem, 36vw, 32.5rem) * -0.42);
+}
+
+.movie-hero__poster {
+  aspect-ratio: 2 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 4px solid var(--bg);
+  border-radius: 0.75rem;
+  background: #2E4374;
+  color: #7083B3;
+  box-shadow: 0 1.25rem 2.5rem rgba(0, 0, 0, 0.5);
+}
+
+.movie-hero__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.movie-hero__info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.125rem;
+  padding-bottom: 0.5rem;
+}
+
+.movie-hero__info .catalog-header__back {
+  margin-bottom: 0;
+}
+
+.movie-hero__title {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+
+.movie-hero__year {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.movie-hero__genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.movie-hero__genre {
+  display: flex;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-soft);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.movie-hero__overview {
+  margin: 0.25rem 0 0;
+  max-width: 64ch;
+  color: var(--text-soft);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.movie-hero__score {
+  display: flex;
+  margin-bottom: 0.875rem;
+}
+
+.movie-review {
+  padding: 1.375rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+}
+
+.movie-review--mine {
+  border: 2px solid var(--yellow);
+}
+
+.movie-review__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.movie-review__header .avatar {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+}
+
+.movie-review__author {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.movie-review__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.625rem;
+  margin: 0;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.movie-review__badge {
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--navy);
+  font-size: 0.75rem;
+}
+
+.movie-review__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.movie-review__date {
+  margin: 0;
+  color: var(--lilac);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.movie-hero__skeleton-line {
+  width: 40%;
+  height: 1.125rem;
+  border-radius: 999px;
+}
+
+.movie-hero__skeleton-line--title {
+  width: 60%;
+  height: 3rem;
+}
+
+.movie-hero__skeleton-line--long {
+  width: 90%;
+}
+
+.movie-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 6vw, 6rem);
+}
+
+.movie-reviews__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.movie-reviews__heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+}
+
+.movie-reviews__heading p {
+  margin: 0;
+}
+
+.movie-reviews__title {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.movie-reviews .new-review,
+.movie-reviews .no-quota {
+  margin-bottom: 0;
+}
+
+.movie-reviews__empty {
+  align-items: center;
+  text-align: center;
+}
+
+.movie-reviews__empty p {
+  margin: 0;
+}
+
+.movie-reviews__empty-title {
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 1.375rem;
+}
+
+.movie-reviews__more {
+  align-self: center;
+  margin-top: 0.75rem;
+}
+
+/* ---------- Perfil ---------- */
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.profile-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2.25rem;
+  padding: 2.25rem 2.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+
+.avatar-uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.avatar-uploader__photo {
+  position: relative;
+}
+
+.avatar-uploader__loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(5, 4, 42, 0.6);
+}
+
+.avatar-uploader__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.375rem;
+}
+
+.avatar-uploader__change {
+  cursor: pointer;
+}
+
+.avatar-uploader__change.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.avatar-uploader:has(#avatar-file:focus-visible) .avatar-uploader__change {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+.avatar-uploader .error {
+  max-width: 16rem;
+  text-align: center;
+}
+
+.profile-card__info {
+  flex: 1 1 22rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+}
+
+.profile-card__eyebrow,
+.profile-card__hint {
+  margin: 0;
+  color: var(--lilac);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.profile-card__hint {
+  margin-top: 0.375rem;
+}
+
+.profile-card__name {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+
+.profile-card__email {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 1.125rem;
+  overflow-wrap: anywhere;
+}
+
+.plan-ticket {
+  display: inline-flex;
+  align-items: center;
+  height: 2rem;
+  margin-top: 0.375rem;
+  padding: 0 1.125rem;
+  border-radius: 3px;
+  background: var(--yellow);
+  color: var(--navy);
+  font-family: var(--font-title);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  letter-spacing: 0.06em;
+  -webkit-mask-image:
+    radial-gradient(circle at 0 50%, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
+    radial-gradient(circle at 100% 50%, #0000 0.375rem, #000 calc(0.375rem + 0.5px));
+  -webkit-mask-composite: source-in;
+  mask-image:
+    radial-gradient(circle at 0 50%, #0000 0.375rem, #000 calc(0.375rem + 0.5px)),
+    radial-gradient(circle at 100% 50%, #0000 0.375rem, #000 calc(0.375rem + 0.5px));
+  mask-composite: intersect;
+}
+
+.profile-card__logout {
+  align-self: flex-start;
+}
+
 /* ---------- Responsive ---------- */
 
 @media (max-width: 960px) {
   .catalog { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .movie-hero__content { grid-template-columns: 12.5rem minmax(0, 1fr); gap: 1.5rem 2rem; }
+  .movie-hero__score { grid-column: 1 / -1; margin-bottom: 1rem; }
   .catalog-filters__toggle { display: flex; }
   .catalog-filters__title { display: none; }
   .catalog-filters:not(.catalog-filters--open) .catalog-filters__form { display: none; }
@@ -3060,6 +3496,10 @@ img { max-width: 100%; }
 
 /* Celular */
 @media (max-width: 448px) {
+  .movie-hero__content { grid-template-columns: 1fr; }
+  .movie-hero__poster { width: 8.75rem; }
+  .movie-hero__overview { font-size: 1rem; }
+  .score-ticket__number { font-size: 2.5rem; }
   .movie-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
   .review-card__date { flex-basis: 100%; margin-left: 0; }
@@ -3076,16 +3516,20 @@ img { max-width: 100%; }
   .review-card__header { flex-wrap: wrap; }
   .review-card__body,
   .review-card__footer { grid-column: 1 / -1; }
-  .review-card__body .film-strip {
+  .review-card__body .film-strip,
+  .movie-review__body .film-strip {
     width: 100%;
     margin: 0.5rem 0 0;
     transform: rotate(1.5deg);
   }
 
-  .review-card__body .film-strip:hover { transform: rotate(0deg); }
-  .review-card__body .film-strip__holes { width: 100%; }
+  .review-card__body .film-strip:hover,
+  .movie-review__body .film-strip:hover { transform: rotate(0deg); }
+  .review-card__body .film-strip__holes,
+  .movie-review__body .film-strip__holes { width: 100%; }
 
-  .review-card__body .film-strip__photo {
+  .review-card__body .film-strip__photo,
+  .movie-review__body .film-strip__photo {
     width: auto;
     height: auto;
     aspect-ratio: 17 / 12;

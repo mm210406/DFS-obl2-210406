@@ -1,10 +1,12 @@
-import { Link } from 'react-router'
+import { Link, useLocation } from 'react-router'
 import { ROUTES } from '../../config/constants'
 import { formatScore, getYear } from '../../utils/format'
+import { countReviews } from '../../utils/plan'
 import Icon from '../Icon'
 import ScoreTicket from '../ScoreTicket'
 
 const MovieCard = ({ movie }) => {
+  const location = useLocation()
   const { tmdbId, title, releaseDate, posterUrl, genres, score, reviewedByMe, myPoints } = movie
   const details = [getYear(releaseDate), genres.map((genre) => genre.name).join(', ')]
     .filter(Boolean)
@@ -37,9 +39,7 @@ const MovieCard = ({ movie }) => {
           <p className="movie-card__score">
             <span className="sr-only">Puntaje CineReview:</span>
             <span className="movie-card__average">{formatScore(score.average)}</span>
-            <span className="movie-card__count">
-              {score.count} {score.count === 1 ? 'reseña' : 'reseñas'}
-            </span>
+            <span className="movie-card__count">{countReviews(score.count)}</span>
           </p>
         ) : (
           <p className="movie-card__count">Sin reseñas todavía</p>
@@ -47,6 +47,7 @@ const MovieCard = ({ movie }) => {
 
         <Link
           to={`${ROUTES.MOVIES}/${tmdbId}`}
+          state={{ backTo: location.pathname + location.search }}
           className="movie-card__link"
           aria-label={`Ver más de ${title}`}
         >

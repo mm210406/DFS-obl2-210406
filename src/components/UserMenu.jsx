@@ -1,31 +1,19 @@
 import { useCallback, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router'
-import { logout } from '../features/user.slice'
-import { clearReviews } from '../features/reviews.slice'
-import { clearMovies } from '../features/movies.slice'
-import { clearSession } from '../utils/session'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router'
 import { ROUTES } from '../config/constants'
 import useClickOutside from '../hooks/useClickOutside'
+import useLogout from '../hooks/useLogout'
 import Avatar from './Avatar'
 
 const UserMenu = () => {
   const user = useSelector((state) => state.user.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const closeSession = useLogout()
   const [open, setOpen] = useState(false)
   const menuRef = useRef(null)
 
   const closeMenu = useCallback(() => setOpen(false), [])
   useClickOutside(menuRef, closeMenu, open)
-
-  const closeSession = () => {
-    clearSession()
-    dispatch(logout())
-    dispatch(clearReviews())
-    dispatch(clearMovies())
-    navigate(ROUTES.LOGIN)
-  }
 
   return (
     <div className="user-menu" ref={menuRef}>

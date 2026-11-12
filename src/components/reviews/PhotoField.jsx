@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react'
-import { MAX_IMAGE_SIZE_MB } from '../../validators/reviews.validators'
+import { MAX_IMAGE_SIZE_MB } from '../../validators/image.validators'
 import { formatFileSize } from '../../utils/format'
 import FieldError from '../FieldError'
 import Icon from '../Icon'

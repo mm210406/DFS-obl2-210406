@@ -9,7 +9,7 @@ import {
   PLUS_REVIEW_LIMIT,
   REVIEWS_PER_PAGE,
 } from '../config/constants'
-import { setReviews, removeReview } from '../features/reviews.slice'
+import { setReviews, removeReview, replaceReview } from '../features/reviews.slice'
 import FormAlert from '../components/FormAlert'
 import Icon from '../components/Icon'
 import ReviewCard from '../components/reviews/ReviewCard'
@@ -24,6 +24,7 @@ import PremiumDialog from '../components/reviews/PremiumDialog'
 import ReviewFilters from '../components/reviews/ReviewFilters'
 import { isFullPointsRange } from '../components/reviews/PointsRange'
 import useGenres from '../hooks/useGenres'
+import { countReviews, plusQuotaText } from '../utils/plan'
 
 const NO_FILTERS = { title: '', genreId: '', pointsFrom: '', pointsTo: '' }
 const ALL_POINTS = { from: MIN_POINTS, to: MAX_POINTS }
@@ -41,6 +42,7 @@ const hasActiveFilters = (filters) => Object.keys(activeFilters(filters)).length
 
 const MyReviews = () => {
   const dispatch = useDispatch()
+  const token = useSelector((state) => state.user.token)
   const plan = useSelector((state) => state.user.user.plan)
   const { reviews, pages, total, resultsTotal } = useSelector((state) => state.reviews)
   const genres = useGenres()
@@ -72,7 +74,7 @@ const MyReviews = () => {
     loadReviews(currentPage, filters)
       .catch((err) => setError(getErrorMessage(err)))
       .finally(() => setLoading(false))
-  }, [currentPage, filters, loadReviews])
+  }, [currentPage, filters, loadReviews, token])
 
   const applyFilters = useCallback((newFilters) => {
     setLoading(true)
@@ -143,10 +145,7 @@ const MyReviews = () => {
     dispatch(removeReview(review._id))
 
     let message = `Eliminaste tu reseña de ${review.movieTitle}.`
-    if (plan === PLANS.PLUS) {
-      const remaining = PLUS_REVIEW_LIMIT - (total - 1)
-      message += ` Ahora te ${remaining === 1 ? 'queda' : 'quedan'} ${remaining} ${remaining === 1 ? 'reseña' : 'reseñas'} de las ${PLUS_REVIEW_LIMIT} del plan Plus.`
-    }
+    if (plan === PLANS.PLUS) message += ` Ahora te ${plusQuotaText(total - 1)}.`
     toast.success(message)
 
     if (reviews.length === 1 && currentPage > 1) {
@@ -159,7 +158,7 @@ const MyReviews = () => {
   const noQuota = plan === PLANS.PLUS && total >= PLUS_REVIEW_LIMIT
 
   const pageText = pages > 1 ? ` · Página ${currentPage} de ${pages}` : ''
-  const totalText = `${total} ${total === 1 ? 'reseña' : 'reseñas'}`
+  const totalText = countReviews(total)
   const countText = `Mostrando ${resultsTotal} de ${totalText}${pageText}`
 
   return (
@@ -256,6 +255,7 @@ const MyReviews = () => {
                     <ReviewCard
                       key={review._id}
                       review={review}
+                      onUpdated={(updatedReview) => dispatch(replaceReview(updatedReview))}
                       onDeleted={handleDeleted}
                       onRefresh={refreshReviews}
                     />

@@ -27,6 +27,7 @@ const isServiceDown = (error) => !error.status || error.status >= 500
 
 const Movies = () => {
   const dispatch = useDispatch()
+  const token = useSelector((state) => state.user.token)
   const { movies, totalPages } = useSelector((state) => state.movies)
   const allGenres = useGenres()
   const genres = useMemo(() => allowedGenres(allGenres), [allGenres])
@@ -39,7 +40,7 @@ const Movies = () => {
   const page = pageFromParams(searchParams)
   const filters = useMemo(() => filtersFromParams(new URLSearchParams(query)), [query])
 
-  const requestKey = `${query}#${attempt}`
+  const requestKey = `${token}#${query}#${attempt}`
   const loading = result.key !== requestKey
   const error = loading ? null : result.error
 

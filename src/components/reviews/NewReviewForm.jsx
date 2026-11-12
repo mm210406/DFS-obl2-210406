@@ -4,9 +4,10 @@ import { joiResolver } from '@hookform/resolvers/joi'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { api, getErrorMessage } from '../../config/api.config'
-import { PLANS, PLUS_REVIEW_LIMIT } from '../../config/constants'
+import { PLANS } from '../../config/constants'
 import { newReviewSchema } from '../../validators/reviews.validators'
 import { getYear } from '../../utils/format'
+import { plusQuotaText } from '../../utils/plan'
 import MovieSearch from './MovieSearch'
 import PointsPicker from './PointsPicker'
 import DescriptionField from './DescriptionField'
@@ -14,10 +15,11 @@ import PhotoField from './PhotoField'
 import FormAlert from '../FormAlert'
 import Icon from '../Icon'
 
-const NewReviewForm = ({ onCancel, onCreated }) => {
+const NewReviewForm = ({ fixedMovie, reviewsUsed, onCancel, onCreated }) => {
   const plan = useSelector((state) => state.user.user.plan)
-  const total = useSelector((state) => state.reviews.total)
-  const [movie, setMovie] = useState(null)
+  const loadedTotal = useSelector((state) => state.reviews.total)
+  const total = reviewsUsed ?? loadedTotal
+  const [movie, setMovie] = useState(fixedMovie ?? null)
   const [sending, setSending] = useState(false)
   const [formAlert, setFormAlert] = useState(null)
 
@@ -31,7 +33,12 @@ const NewReviewForm = ({ onCancel, onCreated }) => {
   } = useForm({
     resolver: joiResolver(newReviewSchema),
     mode: 'onTouched',
-    defaultValues: { tmdbId: '', points: null, description: '', imagen: null },
+    defaultValues: {
+      tmdbId: fixedMovie?.tmdbId ?? '',
+      points: null,
+      description: '',
+      imagen: null,
+    },
   })
 
   const points = Number(watch('points'))
@@ -61,9 +68,9 @@ const NewReviewForm = ({ onCancel, onCreated }) => {
 
     api
       .post('/reviews', formData)
-      .then(() => {
+      .then((res) => {
         toast.success(`¡Publicaste tu reseña de ${movie.title}!`)
-        onCreated()
+        onCreated(res.data)
       })
       .catch((error) => {
         setFormAlert({ title: 'No pudimos publicar la reseña', text: getErrorMessage(error) })
@@ -71,11 +78,8 @@ const NewReviewForm = ({ onCancel, onCreated }) => {
       .finally(() => setSending(false))
   }
 
-  const remaining = PLUS_REVIEW_LIMIT - total
   const quotaText =
-    plan === PLANS.PLUS
-      ? `Te ${remaining === 1 ? 'queda' : 'quedan'} ${remaining} ${remaining === 1 ? 'reseña' : 'reseñas'} de las ${PLUS_REVIEW_LIMIT} del plan Plus`
-      : 'Plan Premium: reseñas ilimitadas'
+    plan === PLANS.PLUS ? `Te ${plusQuotaText(total)}` : 'Plan Premium: reseñas ilimitadas'
 
   return (
     <form
@@ -87,38 +91,40 @@ const NewReviewForm = ({ onCancel, onCreated }) => {
     >
       <div className="new-review__header">
         <h2 id="new-review-title" className="new-review__title">
-          Nueva reseña
+          {fixedMovie ? `Tu reseña de ${fixedMovie.title}` : 'Nueva reseña'}
         </h2>
         <p className="panel__note">{quotaText}</p>
       </div>
 
-      <div className="new-review__movie">
-        <input type="hidden" {...register('tmdbId')} />
-        {movie ? (
-          <>
-            <span className="field-label">Película</span>
-            <div className="selected-movie">
-              <span className="selected-movie__poster" aria-hidden="true">
-                {movie.posterUrl ? <img src={movie.posterUrl} alt="" /> : <Icon name="film" />}
-              </span>
-              <div className="selected-movie__info">
-                <p className="selected-movie__title">
-                  {movie.title}{' '}
-                  <span className="selected-movie__year">{getYear(movie.releaseDate)}</span>
-                </p>
-                <p className="selected-movie__genres">
-                  {movie.genres.map((genre) => genre.name).join(' · ')}
-                </p>
+      <input type="hidden" {...register('tmdbId')} />
+      {!fixedMovie && (
+        <div className="new-review__movie">
+          {movie ? (
+            <>
+              <span className="field-label">Película</span>
+              <div className="selected-movie">
+                <span className="selected-movie__poster" aria-hidden="true">
+                  {movie.posterUrl ? <img src={movie.posterUrl} alt="" /> : <Icon name="film" />}
+                </span>
+                <div className="selected-movie__info">
+                  <p className="selected-movie__title">
+                    {movie.title}{' '}
+                    <span className="selected-movie__year">{getYear(movie.releaseDate)}</span>
+                  </p>
+                  <p className="selected-movie__genres">
+                    {movie.genres.map((genre) => genre.name).join(' · ')}
+                  </p>
+                </div>
+                <button type="button" className="btn btn--ghost btn--sm" onClick={changeMovie}>
+                  Cambiar película
+                </button>
               </div>
-              <button type="button" className="btn btn--ghost btn--sm" onClick={changeMovie}>
-                Cambiar película
-              </button>
-            </div>
-          </>
-        ) : (
-          <MovieSearch onSelect={selectMovie} />
-        )}
-      </div>
+            </>
+          ) : (
+            <MovieSearch onSelect={selectMovie} />
+          )}
+        </div>
+      )}
 
       <fieldset className="new-review__fields" disabled={!movie}>
         <div className="new-review__main">

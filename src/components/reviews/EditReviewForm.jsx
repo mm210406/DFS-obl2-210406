@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { joiResolver } from '@hookform/resolvers/joi'
-import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { api, getErrorMessage } from '../../config/api.config'
-import { replaceReview } from '../../features/reviews.slice'
 import { editReviewSchema } from '../../validators/reviews.validators'
 import { formatDate } from '../../utils/format'
 import PointsPicker from './PointsPicker'
@@ -13,7 +11,6 @@ import PhotoField from './PhotoField'
 import FormAlert from '../FormAlert'
 
 const EditReviewForm = ({ review, onCancel, onSaved, onNotFound }) => {
-  const dispatch = useDispatch()
   const [removeCurrentPhoto, setRemoveCurrentPhoto] = useState(false)
   const [saving, setSaving] = useState(false)
   const [formAlert, setFormAlert] = useState(null)
@@ -58,9 +55,8 @@ const EditReviewForm = ({ review, onCancel, onSaved, onNotFound }) => {
     api
       .patch(`/reviews/${review._id}`, formData)
       .then((res) => {
-        dispatch(replaceReview(res.data))
         toast.success(`Guardaste los cambios de tu reseña de ${review.movieTitle}`)
-        onSaved()
+        onSaved(res.data)
       })
       .catch((error) => {
         if (error.response?.status === 404) {

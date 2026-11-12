@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { logout } from './user.slice'
 
 const initialState = {
   movies: [],
@@ -16,11 +17,12 @@ export const moviesSlice = createSlice({
       state.page = page
       state.totalPages = totalPages
     },
-
-    clearMovies: () => initialState,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, () => initialState)
   },
 })
 
-export const { setMovies, clearMovies } = moviesSlice.actions
+export const { setMovies } = moviesSlice.actions
 
 export default moviesSlice.reducer

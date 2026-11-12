@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
 import userReducer, { login, logout } from '../features/user.slice'
-import reviewsReducer, { clearReviews } from '../features/reviews.slice'
+import reviewsReducer from '../features/reviews.slice'
 import genresReducer from '../features/genres.slice'
-import moviesReducer, { clearMovies } from '../features/movies.slice'
+import moviesReducer from '../features/movies.slice'
+import movieDetailReducer from '../features/movieDetail.slice'
 import { setUnauthorizedHandler } from '../config/api.config'
 import { STORAGE_KEYS } from '../config/constants'
 import { clearSession, getStoredToken, getStoredUser } from '../utils/session'
@@ -14,20 +15,15 @@ export const store = configureStore({
     reviews: reviewsReducer,
     genres: genresReducer,
     movies: moviesReducer,
+    movieDetail: movieDetailReducer,
   },
 })
-
-const endSession = () => {
-  store.dispatch(logout())
-  store.dispatch(clearReviews())
-  store.dispatch(clearMovies())
-}
 
 setUnauthorizedHandler(() => {
   if (!store.getState().user.token) return
 
   clearSession()
-  endSession()
+  store.dispatch(logout())
   toast.info('Tu sesión terminó. Ingresá de nuevo para seguir.')
 })
 
@@ -41,13 +37,10 @@ window.addEventListener('storage', (event) => {
   const current = store.getState().user
 
   if (!token || !user) {
-    if (current.token) endSession()
+    if (current.token) store.dispatch(logout())
     return
   }
 
-  if (token !== current.token) {
-    store.dispatch(clearReviews())
-    store.dispatch(clearMovies())
-    store.dispatch(login({ token, user }))
-  }
+  if (token !== current.token) store.dispatch(logout())
+  store.dispatch(login({ token, user }))
 })

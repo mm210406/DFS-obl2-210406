@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { logout } from './user.slice'
 
 const initialState = {
   reviews: [],
@@ -32,11 +33,12 @@ export const reviewsSlice = createSlice({
         review._id === action.payload._id ? action.payload : review,
       )
     },
-
-    clearReviews: () => initialState,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout, () => initialState)
   },
 })
 
-export const { setReviews, removeReview, replaceReview, clearReviews } = reviewsSlice.actions
+export const { setReviews, removeReview, replaceReview } = reviewsSlice.actions
 
 export default reviewsSlice.reducer

@@ -1,9 +1,11 @@
 import { Outlet } from 'react-router'
 import Navbar from './Navbar'
+import ScrollToTop from './ScrollToTop'
 
 const Layout = () => {
   return (
     <div className="page">
+      <ScrollToTop />
       <Navbar />
       <main className="page__main">
         <Outlet />

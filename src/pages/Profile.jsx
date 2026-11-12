@@ -1,10 +1,10 @@
-// TODO: pantalla "Mi perfil" (próximo paso)
+import ProfileCard from '../components/profile/ProfileCard'
+
 const Profile = () => {
   return (
-    <section className="container section">
-      <h1 className="page-title">Mi perfil</h1>
-      <p className="muted">Pantalla en construcción.</p>
-    </section>
+    <div className="container section profile-page">
+      <ProfileCard />
+    </div>
   )
 }
 
