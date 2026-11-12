@@ -41,8 +41,8 @@ const PlanUsage = ({ reviewsUsed }) => {
     <section className="panel plan-usage" aria-labelledby="plan-usage-title">
       <div className="plan-usage__header">
         <h2 id="plan-usage-title" className="panel__title">
-            Tu uso del plan
-          </h2>
+          Tu uso del plan
+        </h2>
         <span className="plan-usage__plan">Plan Plus</span>
       </div>
       <p className="plan-usage__percentage">

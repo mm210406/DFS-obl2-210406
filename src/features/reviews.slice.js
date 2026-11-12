@@ -7,6 +7,7 @@ const initialState = {
   pages: 0,
   total: 0,
   resultsTotal: 0,
+  edits: 0,
 }
 
 export const reviewsSlice = createSlice({
@@ -32,6 +33,7 @@ export const reviewsSlice = createSlice({
       state.reviews = state.reviews.map((review) =>
         review._id === action.payload._id ? action.payload : review,
       )
+      state.edits += 1
     },
   },
   extraReducers: (builder) => {

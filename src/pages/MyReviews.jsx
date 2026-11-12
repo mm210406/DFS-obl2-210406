@@ -22,9 +22,9 @@ import NewReviewForm from '../components/reviews/NewReviewForm'
 import NoQuotaNotice from '../components/reviews/NoQuotaNotice'
 import PremiumDialog from '../components/reviews/PremiumDialog'
 import ReviewFilters from '../components/reviews/ReviewFilters'
-import { isFullPointsRange } from '../components/reviews/PointsRange'
 import useGenres from '../hooks/useGenres'
 import { countReviews, plusQuotaText } from '../utils/plan'
+import { isFullPointsRange } from '../utils/points'
 
 const NO_FILTERS = { title: '', genreId: '', pointsFrom: '', pointsTo: '' }
 const ALL_POINTS = { from: MIN_POINTS, to: MAX_POINTS }

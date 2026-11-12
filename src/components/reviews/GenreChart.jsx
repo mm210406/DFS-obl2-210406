@@ -37,6 +37,7 @@ const options = {
 
 const GenreChart = () => {
   const total = useSelector((state) => state.reviews.total)
+  const edits = useSelector((state) => state.reviews.edits)
   const [stats, setStats] = useState(null)
   const [error, setError] = useState(false)
 
@@ -50,7 +51,7 @@ const GenreChart = () => {
         setError(false)
       })
       .catch(() => setError(true))
-  }, [total])
+  }, [total, edits])
 
   const header = (
     <div>

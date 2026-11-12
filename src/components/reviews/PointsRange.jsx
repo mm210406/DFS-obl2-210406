@@ -1,11 +1,10 @@
 import { MAX_POINTS, MIN_POINTS } from '../../config/constants'
+import { isFullPointsRange } from '../../utils/points'
 
 const POINTS = Array.from({ length: MAX_POINTS - MIN_POINTS + 1 }, (_, index) => MIN_POINTS + index)
 const MIDDLE_POINTS = (MIN_POINTS + MAX_POINTS) / 2
 
 const toPercent = (value) => ((value - MIN_POINTS) / (MAX_POINTS - MIN_POINTS)) * 100
-
-export const isFullPointsRange = ({ from, to }) => from === MIN_POINTS && to === MAX_POINTS
 
 const PointsRange = ({ labelId, from, to, onChange }) => {
   const changeFrom = (e) => onChange({ from: Math.min(Number(e.target.value), to), to })

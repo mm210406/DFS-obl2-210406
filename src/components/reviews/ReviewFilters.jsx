@@ -1,5 +1,6 @@
 import Icon from '../Icon'
-import PointsRange, { isFullPointsRange } from './PointsRange'
+import { isFullPointsRange } from '../../utils/points'
+import PointsRange from './PointsRange'
 
 const ReviewFilters = ({
   title,
