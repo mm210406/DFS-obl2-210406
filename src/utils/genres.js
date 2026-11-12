@@ -22,6 +22,14 @@ const GENRE_ICONS = {
 
 const DEFAULT_GENRE_ICON = '🎬'
 
+const EXTRA_GENRE_ICONS = [
+  '🎬', '🍿', '🎞️', '🎟️', '🌟', '🔥', '⚔️', '🦸',
+  '🧙', '🐉', '👽', '🤖', '🧟', '🔪', '🏆', '⚽',
+  '🎄', '🐾', '🦖', '🏰', '💃',
+]
+
+export const GENRE_ICON_OPTIONS = [...new Set([...Object.values(GENRE_ICONS), ...EXTRA_GENRE_ICONS])]
+
 export const getGenreIcon = (genre) =>
   genre?.icon || GENRE_ICONS[genre?.tmdbId] || DEFAULT_GENRE_ICON
 
