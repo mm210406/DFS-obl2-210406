@@ -22,6 +22,7 @@ const GENRE_ICONS = {
 
 const DEFAULT_GENRE_ICON = '🎬'
 
-export const getGenreIcon = (tmdbId) => GENRE_ICONS[tmdbId] ?? DEFAULT_GENRE_ICON
+export const getGenreIcon = (genre) =>
+  genre?.icon || GENRE_ICONS[genre?.tmdbId] || DEFAULT_GENRE_ICON
 
 export const allowedGenres = (genres) => genres.filter((genre) => genre.allowed)

@@ -34,6 +34,12 @@ const paths = {
   trash: <path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4h6v3" />,
   refresh: <path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7" />,
   logout: <path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11" />,
+  sparkles: (
+    <>
+      <path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8z" />
+      <path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" />
+    </>
+  ),
   film: (
     <>
       <rect x="3" y="4" width="18" height="16" rx="2" />

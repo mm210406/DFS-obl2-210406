@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux'
 import { PLANS, PLUS_REVIEW_LIMIT } from '../../config/constants'
 
-const PlanUsage = () => {
+const PlanUsage = ({ reviewsUsed }) => {
   const plan = useSelector((state) => state.user.user.plan)
-  const total = useSelector((state) => state.reviews.total)
+  const loadedTotal = useSelector((state) => state.reviews.total)
+  const total = reviewsUsed ?? loadedTotal
 
   if (plan === PLANS.PREMIUM) {
     return (

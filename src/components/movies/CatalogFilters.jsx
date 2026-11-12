@@ -98,7 +98,7 @@ const CatalogFilters = ({ filters, genres, onApply, onClear }) => {
                       className={`genre-chip ${selected ? 'genre-chip--selected' : ''}`}
                       onClick={() => field.onChange(toggleItem(field.value, genre.tmdbId))}
                     >
-                      <span aria-hidden="true">{getGenreIcon(genre.tmdbId)}</span>
+                      <span aria-hidden="true">{getGenreIcon(genre)}</span>
                       {genre.name}
                     </button>
                   )

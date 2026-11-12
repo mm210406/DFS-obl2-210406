@@ -12,7 +12,7 @@ const MovieHero = ({ movie }) => {
   const backTo = location.state?.backTo ?? ROUTES.MOVIES
   const year = getYear(movie.releaseDate)
 
-  const tmdbIdOf = (genre) => allGenres.find((item) => item._id === genre._id)?.tmdbId
+  const fullGenre = (genre) => allGenres.find((item) => item._id === genre._id)
 
   return (
     <section className="movie-hero" aria-labelledby="movie-title">
@@ -42,7 +42,7 @@ const MovieHero = ({ movie }) => {
             <ul className="movie-hero__genres" aria-label="Géneros">
               {movie.genres.map((genre) => (
                 <li key={genre._id} className="movie-hero__genre">
-                  <span aria-hidden="true">{getGenreIcon(tmdbIdOf(genre))}</span>
+                  <span aria-hidden="true">{getGenreIcon(fullGenre(genre))}</span>
                   {genre.name}
                 </li>
               ))}
