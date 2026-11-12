@@ -3,6 +3,9 @@ export const formatDate = (date) =>
 
 export const getYear = (releaseDate) => releaseDate?.slice(0, 4)
 
+export const formatScore = (score) =>
+  score.toLocaleString('es-UY', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+
 const MEGABYTE = 1024 * 1024
 
 export const formatFileSize = (bytes) => {

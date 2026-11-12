@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router'
 import { logout } from '../features/user.slice'
 import { clearReviews } from '../features/reviews.slice'
+import { clearMovies } from '../features/movies.slice'
 import { clearSession } from '../utils/session'
 import { ROUTES } from '../config/constants'
 import useClickOutside from '../hooks/useClickOutside'
@@ -22,6 +23,7 @@ const UserMenu = () => {
     clearSession()
     dispatch(logout())
     dispatch(clearReviews())
+    dispatch(clearMovies())
     navigate(ROUTES.LOGIN)
   }
 

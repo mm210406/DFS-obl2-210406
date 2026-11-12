@@ -1,7 +1,7 @@
-const ScoreTicket = ({ points }) => {
+const ScoreTicket = ({ points, label = 'Puntaje', ariaLabel = `Puntaje: ${points} de 10` }) => {
   return (
-    <div className="score-ticket" role="img" aria-label={`Puntaje: ${points} de 10`}>
-      <span className="score-ticket__label">Puntaje</span>
+    <div className="score-ticket" role="img" aria-label={ariaLabel}>
+      <span className="score-ticket__label">{label}</span>
       <span className="score-ticket__value">{points}</span>
     </div>
   )
